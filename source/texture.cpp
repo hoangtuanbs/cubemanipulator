@@ -10,7 +10,8 @@
 TextureMap CubeTexture::s_Textures;
 
 /*** Texture */
-namespace {
+namespace
+{
 GLuint loadTexture(char const* filePath)
 {
     GLuint textureID;
@@ -18,13 +19,15 @@ GLuint loadTexture(char const* filePath)
 
     int width, height, bpp;
     stbi_uc* data = stbi_load(filePath, &width, &height, &bpp, 0);
-    if (data) {
+    if (data)
+    {
         GLenum format;
-        switch (bpp) {
-        case 1: format = GL_RED; break;
-        case 3: format = GL_RGB; break;
-        case 4: format = GL_RGBA; break;
-        default: format = 0;
+        switch (bpp)
+        {
+            case 1: format = GL_RED; break;
+            case 3: format = GL_RGB; break;
+            case 4: format = GL_RGBA; break;
+            default: format = 0;
         }
 
         glBindTexture(GL_TEXTURE_2D, textureID);
@@ -38,7 +41,10 @@ GLuint loadTexture(char const* filePath)
         glGenerateMipmap(GL_TEXTURE_2D);
 
     }
-    else std::cout << "Failed to load texture:" << std::endl << filePath << std::endl;
+    else
+    {
+        std::cout << "Failed to load texture:" << std::endl << filePath << std::endl;
+    }
 
     stbi_image_free(data);
 

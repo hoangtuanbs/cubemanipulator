@@ -12,6 +12,7 @@ using namespace glm;
 
 #include "shader.hpp"
 
+// Abstract model class
 class Model
 {
 
@@ -28,6 +29,7 @@ protected:
     GLuint _ColorBuffer;
 };
 
+// Cube models
 class CubeModel: public Model
 {
 public:

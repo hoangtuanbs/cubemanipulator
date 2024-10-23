@@ -6,6 +6,9 @@
 
 namespace 
 {
+
+    // Sample data
+    // Copy from some ChatGPT commands :)
     constexpr GLfloat g_VertexBufferData[] =
     { 
 		-1.0f,-1.0f,-1.0f,
@@ -51,7 +54,7 @@ namespace
 		 1.0f,-1.0f, 1.0f
 	};
 
-	// Two UV coordinatesfor each vertex. They were created with Blender.
+	// Two UV coordinatesfor each vertex.
 	constexpr GLfloat g_UVBufferData[] =
     { 
 		0.000059f, 1.0f-0.000004f, 
@@ -102,8 +105,6 @@ namespace
         int index = rand() % (sizeof(g_UVBufferData) / (2*sizeof(GLfloat)));
         return std::pair<GLfloat, GLfloat>(g_UVBufferData[index*2], g_UVBufferData[index*2+1]);
     }
-
-    GLintptr offset{0};
 };
 
 Model::~Model()
@@ -120,6 +121,8 @@ CubeModel::CubeModel():
 
 void CubeModel::changeColor(int index)
 {
+    GLintptr offset{0};
+
     if (_TextureMode)
     {
         return;
@@ -252,13 +255,6 @@ void CubeModel::handleInput(int keyCode)
                 _AutoRotationCws = !_AutoRotationCws;
             }
             break;   
-        }
-
-        case GLFW_KEY_D:
-        {
-            offset += 1;
-            changeColor(1);
-            break;
         }
     }
 }

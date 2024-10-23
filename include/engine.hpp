@@ -35,6 +35,9 @@ public:
     static std::vector<Model*> s_Models;
     GLuint _VertexArrayID;
 
+    // Paint frames on each run loop
+	int drawFrame();
+
 public:
     Engine(const std::string& title,
         int width = 1024,
@@ -42,13 +45,17 @@ public:
 
     ~Engine();
 
+    // Initialize OpenGL engine
     bool initialize();
 
+    // Run loop
 	int run();
 
     // Load resources
 	int load();
-	int drawFrame();
+
+    // Clean resources
+    // Call automatically with destructor
 	int cleanUp();
 };
 

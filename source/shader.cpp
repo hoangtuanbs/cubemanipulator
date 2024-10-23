@@ -13,8 +13,8 @@
 /** Shaders */
 ShaderMap CubeShader::s_Shaders;
 
-GLuint LoadShaders(const char * vertextPath,const char * fragmentPath){
-
+GLuint LoadShaders(const char * vertextPath,const char * fragmentPath)
+{
 	// Create the shaders
 	GLuint vsId = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fsId = glCreateShader(GL_FRAGMENT_SHADER);
@@ -49,7 +49,6 @@ GLuint LoadShaders(const char * vertextPath,const char * fragmentPath){
 	GLint compileStatus = GL_FALSE;
 	int infoLogLength;
 
-
 	// Compile Vertex Shader
 	std::cout << "Compiling vertex shader: " << vertextPath << std::endl;
 	char const * vsPointer = vsCode.c_str();
@@ -66,7 +65,6 @@ GLuint LoadShaders(const char * vertextPath,const char * fragmentPath){
 
         std::cout << "Error: " << &vsError[0] << std::endl;
 	}
-
 
 	// Compile Fragment Shader
 	std::cout << "Compiling shader: " << fragmentPath << std::endl;
@@ -85,7 +83,6 @@ GLuint LoadShaders(const char * vertextPath,const char * fragmentPath){
 		std::cout << "Error: " << &fsError[0] << std::endl;
 	}
 
-
 	// Link the program
 	GLuint shaderId = glCreateProgram();
 	glAttachShader(shaderId, vsId);
@@ -103,10 +100,9 @@ GLuint LoadShaders(const char * vertextPath,const char * fragmentPath){
         std::cout << "Linking error: " << &linkingError[0] << std::endl;
 	}
 
-	
 	glDetachShader(shaderId, vsId);
 	glDetachShader(shaderId, fsId);
-	
+
 	glDeleteShader(vsId);
 	glDeleteShader(fsId);
 
@@ -127,11 +123,9 @@ CubeShader* CubeShader::get(const std::string& name)
 int CubeShader::loadShaders()
 {
     CubeShader* ns = new CubeShader("resources/shaders/normalmapping.vs", "resources/shaders/normalmapping.fs");
-
     s_Shaders["normal"] = ns;
 
     CubeShader* ts = new CubeShader("resources/shaders/texturemapping.vs", "resources/shaders/texturemapping.fs");
-
     s_Shaders["texture"] = ts;
 
     return s_Shaders.size();
@@ -172,7 +166,7 @@ void CubeShader::use()
 void CubeShader::set(const std::string& name, int value) const
 {
     glUniform1i(glGetUniformLocation(_ShaderID, name.c_str()), value);
-};
+}
 
 void CubeShader::set(const std::string& name, const glm::mat4& matrix) const {
     glUniformMatrix4fv(glGetUniformLocation(_ShaderID, name.c_str()), 1, GL_FALSE, &matrix[0][0]);

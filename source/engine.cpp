@@ -9,14 +9,12 @@ Engine::Engine(const std::string& title, int width, int height):
     _ScreenWidth(width),
     _ScreenHeight(height)
 {
-
 };
 
 Engine::~Engine()
 {
-    cleanUp();
-
     glfwTerminate();
+    cleanUp();
 }
 
 bool Engine::initialize()
@@ -37,7 +35,7 @@ bool Engine::initialize()
 #ifdef __linux__ 
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); 
 #endif
-	
+
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Open a window and create its OpenGL context
@@ -74,10 +72,10 @@ bool Engine::initialize()
                 {
                     model->handleInput(key);
                 }
-                
+
                 return;
             }
-            
+
             default:
             {
                 static double lastTime = 0;
@@ -94,9 +92,10 @@ bool Engine::initialize()
                         model->handleInput(key);
                     }
                 }
-            }
                 break;
             }
+
+        }
     });
 
     glfwSetScrollCallback(_Window, [](GLFWwindow* window, double xoffset, double yoffset)
@@ -121,7 +120,6 @@ bool Engine::initialize()
 								glm::vec3(0,0,0), // and looks at the origin
 								glm::vec3(0,1,0));  // Head is up (set to 0,-1,0 to look upside-down)
 
-    
     return true;
 }
 
@@ -132,10 +130,8 @@ int Engine::run()
         // Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //handleKeyInputs();
-
         drawFrame();
-		
+
 		// Swap buffers
 		glfwSwapBuffers(_Window);
 		glfwPollEvents();
@@ -185,6 +181,8 @@ int Engine::cleanUp()
 
     glDeleteVertexArrays(1, &_VertexArrayID);
 
+    CubeShader::cleanUp();
+    CubeTexture::cleanUp();
 
     return s_Models.size();
 }
