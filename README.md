@@ -46,5 +46,5 @@ Make sure the system is equiped with the following
 2. X11 may need to be installed for OpenGL window creation:
 
     ```bash
-    sudo apt-get install libx11-dev xorg-dev libglu1-mesa-dev
+    sudo apt-get install libx11-dev xorg-dev libglu1-mesa-dev libglew-dev
     ```

@@ -44,9 +44,9 @@ public:
 
     bool initialize();
 
-    void handleKeyInputs();
-
 	int run();
+
+    // Load resources
 	int load();
 	int drawFrame();
 	int cleanUp();

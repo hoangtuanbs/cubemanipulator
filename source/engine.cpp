@@ -62,10 +62,41 @@ bool Engine::initialize()
 	glfwSetInputMode(_Window, GLFW_STICKY_KEYS, GL_TRUE);
     glfwSetKeyCallback(_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
     {
-        /*for (auto& model: s_Models)
+        switch (key)
         {
-            model->handleInput(key);
-        }*/
+            case GLFW_KEY_UP:
+            case GLFW_KEY_DOWN:
+            case GLFW_KEY_LEFT:
+            case GLFW_KEY_RIGHT:
+            {
+                /* code */
+                for (auto& model: s_Models)
+                {
+                    model->handleInput(key);
+                }
+                
+                return;
+            }
+            
+            default:
+            {
+                static double lastTime = 0;
+                double currentTime = glfwGetTime();
+                float deltaTime = float(currentTime - lastTime);
+
+                if (deltaTime > 0.2f)
+                {
+                    // For the next frame, the "last time" will be "now"
+                    lastTime = currentTime;
+
+                    for (auto& model: s_Models)
+                    {
+                        model->handleInput(key);
+                    }
+                }
+            }
+                break;
+            }
     });
 
     glfwSetScrollCallback(_Window, [](GLFWwindow* window, double xoffset, double yoffset)
@@ -94,77 +125,6 @@ bool Engine::initialize()
     return true;
 }
 
-void Engine::handleKeyInputs()
-{
-    int key{-1};
-    if (glfwGetKey(_Window, GLFW_KEY_UP) == GLFW_PRESS)
-    {
-        key = GLFW_KEY_UP;
-    }
-    else if (glfwGetKey(_Window, GLFW_KEY_DOWN) == GLFW_PRESS)
-    {
-        key = GLFW_KEY_DOWN;
-    } else if (glfwGetKey(_Window, GLFW_KEY_LEFT) == GLFW_PRESS)
-    {
-        key = GLFW_KEY_LEFT;
-    }
-    else if (glfwGetKey(_Window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-    {
-        key = GLFW_KEY_RIGHT;
-    } else if (glfwGetKey(_Window, GLFW_KEY_1) == GLFW_PRESS)
-    {
-        key = GLFW_KEY_1;
-    } else if (glfwGetKey(_Window, GLFW_KEY_2) == GLFW_PRESS)
-    {
-        key = GLFW_KEY_2;
-    } else if (glfwGetKey(_Window, GLFW_KEY_3) == GLFW_PRESS)
-    {
-        key = GLFW_KEY_3;
-    } else if (glfwGetKey(_Window, GLFW_KEY_4) == GLFW_PRESS)
-    {
-        key = GLFW_KEY_4;
-    } else if (glfwGetKey(_Window, GLFW_KEY_5) == GLFW_PRESS)
-    {
-        key = GLFW_KEY_5;
-    } else if (glfwGetKey(_Window, GLFW_KEY_6) == GLFW_PRESS)
-    {
-        key = GLFW_KEY_6;
-    }  
-    else if (glfwGetKey(_Window, GLFW_KEY_T) == GLFW_PRESS)
-    {
-        // Compute time difference between current and last frame
-        static double lastTime = 0;
-        double currentTime = glfwGetTime();
-        float deltaTime = float(currentTime - lastTime);
-
-        if (deltaTime > 0.2f)
-        {
-            // For the next frame, the "last time" will be "now"
-            lastTime = currentTime;
-        
-            key = GLFW_KEY_T;
-        }
-    }  else if (glfwGetKey(_Window, GLFW_KEY_A) == GLFW_PRESS)
-    {
-        // Compute time difference between current and last frame
-        static double lastTime = 0;
-        double currentTime = glfwGetTime();
-        float deltaTime = float(currentTime - lastTime);
-
-        if (deltaTime > 0.2f)
-        {
-            // For the next frame, the "last time" will be "now"
-            lastTime = currentTime;
-            key = GLFW_KEY_A;
-        }
-    }
-
-    for (auto& model: s_Models)
-    {
-        model->handleInput(key);
-    }
-}
-
 int Engine::run()
 {
     while (glfwGetKey(_Window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClose(_Window))
@@ -172,7 +132,7 @@ int Engine::run()
         // Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        handleKeyInputs();
+        //handleKeyInputs();
 
         drawFrame();
 		

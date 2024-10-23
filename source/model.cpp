@@ -142,6 +142,7 @@ void CubeModel::changeColor(int index)
     constexpr int s_DataSize{6};
     GLfloat buffer_data[s_DataSize];
 
+    // Fill with Random color retrieved from bufferx
     std::pair<GLfloat, GLfloat> color = RandomUV();
     for (int i = 0; i < s_DataSize/2; i++)
     {
